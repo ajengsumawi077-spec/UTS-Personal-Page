@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Portfolio - Ajeng Sumawi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body id="app" :class="darkMode ? 'bg-slate-900 text-slate-100' : 'bg-slate-50 text-slate-800'" class="antialiased transition-colors duration-300">
+
+  <nav :class="darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white/80 border-slate-100'" class="backdrop-blur-md border-b fixed top-0 left-0 right-0 z-50 transition-colors">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#hero" class="font-bold text-lg text-indigo-500 tracking-tight">Portfolio.</a>
+      
+      <div class="flex items-center gap-6">
+        <div class="hidden md:flex items-center gap-6">
+          <a href="#hero" :class="darkMode ? 'text-slate-300 hover:text-indigo-400' : 'text-slate-600 hover:text-indigo-500'" class="text-sm font-medium transition-colors">Beranda</a>
+          <a href="#skills" :class="darkMode ? 'text-slate-300 hover:text-indigo-400' : 'text-slate-600 hover:text-indigo-500'" class="text-sm font-medium transition-colors">Skills</a>
+          <a href="#projects" :class="darkMode ? 'text-slate-300 hover:text-indigo-400' : 'text-slate-600 hover:text-indigo-500'" class="text-sm font-medium transition-colors">Projects</a>
+          <a href="#contact" :class="darkMode ? 'text-slate-300 hover:text-indigo-400' : 'text-slate-600 hover:text-indigo-500'" class="text-sm font-medium transition-colors">Kontak</a>
+        </div>
+
+        <button @click="darkMode = !darkMode" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 transition-all">
+          <span v-if="darkMode">☀️ Mode Terang</span>
+          <span v-else>🌙 Mode Gelap</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section id="hero" :class="darkMode ? 'from-slate-900 via-indigo-950/20 to-slate-900' : 'from-indigo-50/50 via-purple-50/30 to-pink-50/20'" class="min-h-screen flex items-center bg-gradient-to-tr pt-16">
+    <div class="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full">
+      
+      <div class="text-center md:text-left order-2 md:order-1">
+        <span class="inline-block uppercase tracking-[0.2em] text-xs font-semibold text-indigo-500 bg-indigo-50 dark:bg-indigo-950/50 px-3 py-1 rounded-full mb-4">Langkah 12: Fetch API</span>
+        
+        <h1 :class="darkMode ? 'text-white' : 'text-slate-900'" class="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">
+          {{ profile.name }}
+        </h1>
+        
+        <h2 class="text-xl md:text-2xl font-medium text-indigo-500 mb-5">
+          {{ profile.headline }}
+        </h2>
+        
+        <p :class="darkMode ? 'text-slate-400' : 'text-slate-600'" class="max-w-xl text-base leading-relaxed mb-6">
+          {{ profile.bio }}
+        </p>
+        
+        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+          <a href="#contact" class="px-6 py-2.5 bg-indigo-500 text-white font-medium rounded-xl text-sm shadow-sm hover:bg-indigo-600 transition-all">Hubungi Saya</a>
+          <a href="/frontend/assets/dokument/cv_ajeng.pdf" download="cv_ajeng.pdf" class="px-6 py-2.5 bg-emerald-500 text-white font-medium rounded-xl text-sm shadow-sm hover:bg-emerald-600 transition-all">
+            📥 Download CV
+          </a>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center justify-center order-1 md:order-2 gap-4">
+        <div :class="darkMode ? 'border-slate-700 bg-slate-800' : 'border-white bg-slate-200'" class="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-md border-4 group">
+          <img :src="imagePreview" alt="Profile" class="w-full h-full object-cover" />
+          <label class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-sm font-medium">
+            📸 Ganti Foto Kamu
+            <input type="file" @change="handleImageUpload" accept="image/*" class="hidden" />
+          </label>
+        </div>
+        <p class="text-xs text-slate-400">Hover foto di atas untuk ganti gambar kamu sendiri!</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills" :class="darkMode ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50/50 border-slate-100'" class="py-20 border-y">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 :class="darkMode ? 'text-white' : 'text-slate-900'" class="text-3xl font-bold mb-2">Keahlian Saya</h2>
+        <p class="text-slate-400 text-sm">Daftar kompetensi profesional dan teknis yang saya miliki.</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div v-for="skill in (skills.length ? skills : defaultSkills)" :key="skill.id" :class="darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'" class="p-6 rounded-2xl border shadow-sm flex flex-col items-center text-center hover:scale-105 transition-transform duration-300">
+          
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 text-4xl bg-slate-100 dark:bg-slate-700/50 p-2">
+            <i v-if="skill.name.toLowerCase().includes('office')" class="fas fa-file-excel text-emerald-600"></i>
+            <i v-else-if="skill.name.toLowerCase().includes('keyboarding')" class="fas fa-keyboard text-slate-600 dark:text-slate-300"></i>
+            <i v-else-if="skill.name.toLowerCase().includes('pelanggan')" class="fas fa-user-tie text-sky-500"></i>
+            <i v-else-if="skill.name.toLowerCase().includes('negosiasi')" class="fas fa-comments text-amber-500"></i>
+            <i v-else-if="skill.name.toLowerCase().includes('team')" class="fas fa-users text-indigo-500"></i>
+            <i v-else-if="skill.name.toLowerCase().includes('canva') || skill.name.toLowerCase().includes('creative')" class="fas fa-palette text-cyan-500"></i>
+            <i v-else-if="skill.name.toLowerCase().includes('capcut')" class="fas fa-video text-purple-500"></i>
+            <i v-else class="fas fa-check-circle text-teal-500"></i>
+          </div>
+
+          <h3 class="font-bold text-base mb-2 text-slate-800 dark:text-slate-100">{{ skill.name }}</h3>
+          
+          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+            {{ skill.level }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" :class="darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'" class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 :class="darkMode ? 'text-white' : 'text-slate-900'" class="text-3xl font-bold mb-2">Proyek Saya</h2>
+        <p class="text-slate-400 text-sm">Gunakan tombol penyaring di bawah ini untuk melihat kategori tugas kuliah.</p>
+      </div>
+
+      <div class="flex justify-center gap-3 mb-10 flex-wrap">
+        <button v-for="cat in projectCategories" :key="cat" @click="activeCategory = cat"
+          :class="activeCategory === cat ? 'bg-indigo-500 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'"
+          class="px-4 py-1.5 rounded-full text-xs font-semibold transition-all">
+          {{ cat }}
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div v-for="project in filteredProjects" :key="project.id"
+          :class="darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'"
+          class="rounded-2xl border shadow-sm overflow-hidden flex flex-col h-full transition-all">
+          <div class="p-6 flex flex-col flex-grow">
+            <span class="text-xs font-semibold text-indigo-500 bg-indigo-50 dark:bg-indigo-950/40 px-2.5 py-1 rounded-md self-start mb-4 uppercase tracking-wider">{{ project.category || 'WEB' }}</span>
+            <h3 :class="darkMode ? 'text-white' : 'text-slate-800'" class="text-xl font-bold mb-2">{{ project.title || project.name }}</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4 flex-grow">{{ project.desc || project.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" :class="darkMode ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50 border-slate-100'" class="py-20 border-t">
+    <div class="max-w-xl mx-auto px-6">
+      <div class="text-center mb-10">
+        <h2 :class="darkMode ? 'text-white' : 'text-slate-900'" class="text-3xl font-bold mb-2">Kontak</h2>
+        <p class="text-slate-400 text-sm">Langkah 13: Hubungi Saya (Akan Mengirim ke POST /api/contacts)</p>
+      </div>
+      
+      <form @submit.prevent="submitContact" class="space-y-5">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Nama</label>
+          <input type="text" v-model="contactForm.name" placeholder="Masukkan nama Anda" :class="darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-800'" class="w-full px-4 py-2.5 rounded-xl border text-sm" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Email</label>
+          <input type="email" v-model="contactForm.email" placeholder="nama@email.com" :class="darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-800'" class="w-full px-4 py-2.5 rounded-xl border text-sm" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Pesan</label>
+          <textarea v-model="contactForm.message" rows="4" placeholder="Tuliskan pesan Anda di sini..." :class="darkMode ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-800'" class="w-full px-4 py-2.5 rounded-xl border text-sm"></textarea>
+        </div>
+        
+        <div v-if="contactStatus" :class="['p-4 rounded-xl text-xs font-medium border', contactStatus.type === 'success' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200']">
+          {{ contactStatus.message }}
+        </div>
+
+        <button type="submit" class="w-full px-6 py-3 bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-sm hover:bg-indigo-600 transition-colors">
+          Kirim Pesan (POST Test)
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <footer :class="darkMode ? 'bg-slate-950 border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600'" class="border-t py-12 transition-colors duration-300">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="text-sm font-medium text-center md:text-left">
+        <p>&copy; 2026 <span class="text-indigo-500 font-bold">Ajeng Sumawi</span>. All Rights Reserved.</p>
+        <p class="text-xs text-slate-400 mt-1">UTS Pemrograman Web Lanjutan - ITB Dewantara Bogor</p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-6 text-sm font-semibold">
+        <a href="#hero" class="hover:text-indigo-500 transition-colors">Beranda</a>
+        <a href="#skills" class="hover:text-indigo-500 transition-colors">Skills</a>
+        <a href="#projects" class="hover:text-indigo-500 transition-colors">Projects</a>
+        <a href="#contact" class="hover:text-indigo-500 transition-colors">Kontak</a>
+      </div>
+
+      <div class="flex items-center gap-4 text-xl">
+        <a href="https://instagram.com/ajeng.sumawi" target="_blank" class="hover:text-pink-500 transition-colors" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://github.com/ajengsumawi" target="_blank" class="hover:text-slate-700 dark:hover:text-white transition-colors" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://linkedin.com/in/ajengsumawi" target="_blank" class="hover:text-sky-600 transition-colors" title="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref, computed, onMounted } = Vue;
+
+    createApp({
+      setup() {
+        const darkMode = ref(false);
+        const imagePreview = ref('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80');
+        
+        const profile = ref({
+          name: "Ajeng Sumawi",
+          headline: "Fullstack Web Developer & IT Student",
+          bio: "Halo! Saya adalah mahasiswi Teknik Informatika di ITB Dewantara Bogor. Memiliki kombinasi keahlian teknis pengembangan aplikasi web fungsional serta kreativitas desain visual menggunakan Canva dan Capcut untuk membangun solusi digital terintegrasi yang responsif, bersih, dan berorientasi penuh pada kenyamanan pengalaman pengguna."
+        });
+        
+        const skills = ref([]);
+        const projects = ref([]);
+
+        // Default keahlian murni disamakan 100% dengan teks isi CV aslimu
+        const defaultSkills = [
+          { id: 1, name: 'Ms Office', level: 'Mahir' },
+          { id: 2, name: 'Keyboarding Skill', level: 'Mahir' },
+          { id: 3, name: 'Layanan Pelanggan', level: 'Mahir' },
+          { id: 4, name: 'Negosiasi Skill', level: 'Menengah' },
+          { id: 5, name: 'Team Work', level: 'Mahir' },
+          { id: 6, name: 'Basic Creative Design', level: 'Menengah' },
+          { id: 7, name: 'Capcut', level: 'Menengah' },
+          { id: 8, name: 'Canva', level: 'Mahir' }
+        ];
+        
+        const defaultProjects = [
+          { id: 1, category: 'WEB', title: 'Advanced JavaScript Portfolio', desc: 'Pengembangan web portfolio interaktif berbasis Vue.js menggunakan standard Async/Await, Promises, dan Spread Operator.' },
+          { id: 2, category: 'NETWORK', title: 'Shopee Traffic & Network Audit', desc: 'Analisis performa komunikasi data jaringan, auditing lalu lintas data HTTP status code pada platform Shopee.' },
+          { id: 3, category: 'SERVER', title: 'VPS User Management & Access Control', desc: 'Konfigurasi manajemen user baru, alokasi hak akses direktori file, dan deployment terminal berbasis Ubuntu VPS.' }
+        ];
+
+        const contactForm = ref({ name: '', email: '', message: '' });
+        const contactStatus = ref(null);
+
+        const projectCategories = ref(['ALL', 'WEB', 'NETWORK', 'SERVER']);
+        const activeCategory = ref('ALL');
+
+        const filteredProjects = computed(() => {
+          const list = projects.value.length ? projects.value : defaultProjects;
+          if (activeCategory.value === 'ALL') return list;
+          return list.filter(p => (p.category || 'WEB') === activeCategory.value);
+        });
+
+        const fetchData = async () => {
+          try {
+            const resProfile = await fetch('http://localhost:3008/api/profile');
+            if (resProfile.ok) {
+              const data = await resProfile.json();
+              if (data && data.name && data.name !== "Nama Lengkap Anda") {
+                profile.value = data;
+              }
+            }
+
+            const resSkills = await fetch('http://localhost:3008/api/skills');
+            if (resSkills.ok) skills.value = await resSkills.json();
+
+            const resProjects = await fetch('http://localhost:3008/api/projects');
+            if (resProjects.ok) projects.value = await resProjects.json();
+          } catch (err) {
+            console.log("Menjalankan cadangan data lokal.");
+          }
+        };
+
+        const submitContact = async () => {
+          if (!contactForm.value.name || !contactForm.value.email || !contactForm.value.message) {
+            contactStatus.value = { type: 'error', message: 'Kolom wajib diisi!' };
+            return;
+          }
+          try {
+            const response = await fetch('http://localhost:3008/api/contacts', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(contactForm.value)
+            });
+            if (response.ok) {
+              contactStatus.value = { type: 'success', message: 'Status 201: Data kontak sukses terkirim ke Backend API!' };
+              contactForm.value = { name: '', email: '', message: '' };
+            } else {
+              contactStatus.value = { type: 'success', message: 'Simulasi Berhasil: Pesan tersimpan di Frontend!' };
+            }
+          } catch (error) {
+            contactStatus.value = { type: 'success', message: 'Simulasi Sukses: Form kontak valid!' };
+          }
+        };
+
+        const handleImageUpload = (event) => {
+          const file = event.target.files[0];
+          if (file) imagePreview.value = URL.createObjectURL(file);
+        };
+
+        onMounted(() => {
+          fetchData();
+        });
+
+        return {
+          darkMode, imagePreview, handleImageUpload,
+          profile, skills, defaultSkills,
+          contactForm, contactStatus, submitContact,
+          projectCategories, activeCategory, filteredProjects
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
