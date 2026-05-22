@@ -12,8 +12,7 @@ Project ini adalah website portfolio pribadi yang dibangun sebagai tugas UTS. We
 5. Buka http://localhost:3008 di browser.
 
 ## Screenshot Aplikasi
-![Uploading Screenshot 2026-05-22 160136.png…]()
-
+([Portfolio Saya](![alt text](<frontend/assets/dokument/Screenshot 2026-05-22 160136.png>)
 
 ## Link Deployment
 [Belum dideploy]
