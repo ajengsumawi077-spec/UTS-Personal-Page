@@ -15,4 +15,6 @@ Project ini adalah website portfolio pribadi yang dibangun sebagai tugas UTS. We
 ([Portfolio Saya](![alt text](<frontend/assets/dokument/Screenshot 2026-05-22 160136.png>)
 
 ## Link Deployment
-[Belum dideploy]
+[*Status:* Aplikasi dijalankan secara lokal (Local Environment).
+
+*Catatan:* Aplikasi ini menggunakan database lokal (SQLite) yang memerlukan integrasi file sistem. Untuk pengujian, silakan jalankan aplikasi pada lingkungan lokal dengan mengikuti langkah-langkah di bagian "Cara Menjalankan Project" di atas.]
